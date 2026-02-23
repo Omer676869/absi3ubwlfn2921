@@ -2,19 +2,22 @@ let status = "no";
 let timeout = null;
 
 export default function handler(req, res) {
-  if (req.url === "/check" && req.method === "GET") {
-    return res.status(200).json({ status });
+
+  // GET /check → returns status
+  if (req.url === "/check") {
+    return res.json({ status });
   }
 
-  if (req.url === "/check" && req.method === "POST") {
+  // GET /trigger → sets yes for 1 second
+  if (req.url === "/trigger") {
     status = "yes";
 
-    if (timeout) clearTimeout(timeout);
+    clearTimeout(timeout);
     timeout = setTimeout(() => {
       status = "no";
     }, 1000);
 
-    return res.status(200).json({ status });
+    return res.json({ status: "yes (auto reset in 1s)" });
   }
 
   res.status(404).end("Not found");
