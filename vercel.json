@@ -4,6 +4,7 @@
   ],
   "routes": [
     { "src": "/check", "dest": "/server.js" },
+    { "src": "/trigger", "dest": "/server.js" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
