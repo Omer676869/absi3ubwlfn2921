@@ -1,18 +1,21 @@
-const express = require("express");
-const app = express();
-
 let status = "no";
-let timeout;
+let timeout = null;
 
-app.get("/check", (req, res) => {
-  res.json({ status });
-});
+export default function handler(req, res) {
+  if (req.url === "/check" && req.method === "GET") {
+    return res.status(200).json({ status });
+  }
 
-app.post("/check", (req, res) => {
-  status = "yes";
-  clearTimeout(timeout);
-  timeout = setTimeout(() => status = "no", 1000);
-  res.json({ status });
-});
+  if (req.url === "/check" && req.method === "POST") {
+    status = "yes";
 
-module.exports = app;
+    if (timeout) clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      status = "no";
+    }, 1000);
+
+    return res.status(200).json({ status });
+  }
+
+  res.status(404).end("Not found");
+}
