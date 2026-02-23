@@ -1,45 +1,22 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Check Toggle</title>
-  <style>
-    body {
-      background:#000;
-      color:white;
-      text-align:center;
-      font-family:Arial;
-      padding-top:100px;
-    }
-    button {
-      font-size:50px;
-      padding:20px 60px;
-      cursor:pointer;
-    }
-    #status {
-      font-size:30px;
-      margin-top:20px;
-    }
-  </style>
-</head>
-<body>
-
-<button id="btn">BIG BUTTON</button>
-<div id="status">status: no</div>
+<body style="background:black;color:white;text-align:center;padding-top:100px;">
+<button id="btn" style="font-size:60px;">BIG BUTTON</button>
+<h1 id="s">status: no</h1>
 
 <script>
 async function update() {
-  const r = await fetch("/check/");
+  const r = await fetch("/check");
   const j = await r.json();
-  document.getElementById("status").innerText = "status: " + j.status;
+  s.innerText = "status: " + j.status;
 }
 
-document.getElementById("btn").onclick = async () => {
-  await fetch("/check/", { method: "POST" });
+btn.onclick = async () => {
+  await fetch("/check", {method:"POST"});
   update();
 };
 
-setInterval(update, 200);
+setInterval(update, 500);
 </script>
-
 </body>
 </html>
